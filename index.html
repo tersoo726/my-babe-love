@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#170b19">
+  <title>Our Little Universe ❤️</title>
+  <style>
+    :root {
+      --bg: #140b17;
+      --panel: rgba(255,255,255,.075);
+      --pink: #ff6fae;
+      --rose: #ffb6d4;
+      --gold: #ffd68a;
+      --text: #fff7fb;
+      --muted: #dbcbd7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,111,174,.17), transparent 30%),
+        radial-gradient(circle at 90% 35%, rgba(157,95,255,.14), transparent 28%),
+        linear-gradient(160deg, #100912, #211023 55%, #130b18);
+      overflow-x: hidden;
+    }
+    a { color: var(--rose); }
+    .wrap { width: min(1050px, 92%); margin: auto; }
+    .nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(20,11,23,.8); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+    }
+    .nav-inner { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; }
+    .brand { font-size: 1.05rem; color: var(--rose); letter-spacing:.04em; }
+    .nav a { text-decoration:none; font-family:Arial,sans-serif; font-size:.83rem; margin-left:12px; }
+    .hero { min-height: 88vh; display:grid; place-items:center; text-align:center; padding:70px 0 55px; position:relative; }
+    .eyebrow { color:var(--gold); text-transform:uppercase; letter-spacing:.22em; font: .75rem Arial,sans-serif; }
+    h1 { font-size:clamp(3rem, 9vw, 6.5rem); line-height:.98; margin:20px 0; font-weight:normal; }
+    h1 span { color:var(--pink); font-style:italic; }
+    .hero p { max-width:650px; margin:0 auto 25px; color:var(--muted); font-size:1.15rem; line-height:1.8; }
+    .btn {
+      border:0; border-radius:999px; padding:13px 21px; cursor:pointer;
+      background:linear-gradient(100deg, var(--pink), #ffc1d9); color:#35152a;
+      font: bold .95rem Arial,sans-serif; text-decoration:none; display:inline-block;
+      box-shadow:0 8px 30px rgba(255,111,174,.2); transition:transform .2s;
+    }
+    .btn:hover { transform:translateY(-2px); }
+    .btn.secondary { background:transparent; color:var(--rose); border:1px solid rgba(255,182,212,.55); box-shadow:none; }
+    section { padding:72px 0; }
+    .section-title { text-align:center; font-size:clamp(2rem,5vw,3.3rem); font-weight:normal; margin:0 0 14px; }
+    .section-title span { color:var(--pink); font-style:italic; }
+    .intro { text-align:center; max-width:650px; margin:0 auto 32px; color:var(--muted); line-height:1.75; }
+    .card { background:var(--panel); border:1px solid rgba(255,255,255,.11); border-radius:24px; padding:clamp(22px,4vw,38px); box-shadow:0 15px 55px rgba(0,0,0,.14); }
+    .letter { max-width:780px; margin:auto; line-height:1.95; font-size:1.1rem; color:#f7eaf2; }
+    .letter .sign { color:var(--rose); font-style:italic; font-size:1.35rem; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .reason { text-align:center; min-height:155px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:10px; }
+    .reason .emoji { font-size:2rem; }
+    .reason h3 { margin:0; font-size:1.18rem; font-weight:normal; color:var(--rose); }
+    .reason p { margin:0; color:var(--muted); line-height:1.6; font-size:.96rem; }
+    .memories { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+    .photo {
+      min-height:210px; border:1px dashed rgba(255,182,212,.6); border-radius:20px;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      text-align:center; padding:18px; background:linear-gradient(145deg,rgba(255,111,174,.1),rgba(255,255,255,.025));
+      color:var(--muted); line-height:1.6;
+    }
+    .photo strong { color:var(--rose); display:block; font-size:1.1rem; margin:8px 0; }
+    .photo input { max-width:100%; font: .8rem Arial,sans-serif; }
+    .photo img { width:100%; height:170px; object-fit:cover; border-radius:12px; margin-bottom:10px; }
+    .music-list { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .song { display:flex; flex-direction:column; gap:12px; }
+    .song h3 { margin:0; color:var(--rose); font-size:1.25rem; font-weight:normal; }
+    .song p { color:var(--muted); margin:0; line-height:1.6; }
+    .song a { align-self:flex-start; }
+    .counter { text-align:center; }
+    .counter-number { font-size:clamp(3rem,9vw,5rem); color:var(--pink); margin:15px 0; }
+    .surprise { display:none; margin-top:22px; color:var(--rose); font-size:1.25rem; line-height:1.8; }
+    .surprise.show { display:block; animation:fadeIn .8s ease both; }
+    footer { text-align:center; padding:35px 0 55px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); line-height:1.8; }
+    .heart { position:fixed; bottom:-30px; z-index:0; pointer-events:none; opacity:0; animation:floatUp 7s linear forwards; }
+    .content { position:relative; z-index:1; }
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .7s, transform .7s; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    @keyframes floatUp { 0%{transform:translateY(0) rotate(0);opacity:0} 10%{opacity:.55} 100%{transform:translateY(-110vh) rotate(35deg);opacity:0} }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    @media(max-width:700px) {
+      .grid,.memories,.music-list { grid-template-columns:1fr; }
+      .nav-inner { align-items:flex-start; flex-direction:column; }
+      .nav-links { display:flex; flex-wrap:wrap; gap:8px; }
+      .nav a { margin:0 8px 0 0; }
+      .hero { min-height:78vh; }
+      section { padding:55px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand">♡ Our Little Universe</div>
+      <div class="nav-links">
+        <a href="#letter">My Letter</a>
+        <a href="#reasons">Why You</a>
+        <a href="#memories">Memories</a>
+        <a href="#music">Our Songs</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="content">
+    <header class="hero">
+      <div class="wrap">
+        <div class="eyebrow">A little place made just for you</div>
+        <h1>To my <span id="heroName">My Love</span><br>❤️</h1>
+        <p>In a world that can feel so heavy, you have been one of my softest places to land. This little corner of the internet is my way of reminding you how deeply you matter to me.</p>
+        <a class="btn" href="#letter">Open my heart ↓</a>
+        <a class="btn secondary" href="#surprise-section">A little surprise</a>
+      </div>
+    </header>
+
+    <section id="letter">
+      <div class="wrap reveal">
+        <h2 class="section-title">A letter from <span>my heart</span></h2>
+        <p class="intro">Some things deserve more than a quick message.</p>
+        <div class="card letter">
+          <p>My love,</p>
+          <p>I may not have everything figured out yet, and life has not always been easy, but one thing I never want you to doubt is how much you mean to me. Your presence brings light into my difficult days. Sometimes, just hearing your voice makes the world feel a little less heavy.</p>
+          <p>Thank you for being there for me, for your care, your patience, your love, and the little things you do that mean more than I can explain. I see you, I appreciate you, and I don't want you to ever feel taken for granted.</p>
+          <p>I cannot promise that every day will be perfect. I can promise to keep learning, keep growing, communicate better, and keep choosing us with intention. I want our love to be a safe place where we can both be honest, understood, respected, and loved.</p>
+          <p>You are not just someone I love. You are my person, my peace, my favourite voice, and a beautiful part of the future I hope to build.</p>
+          <p class="sign">Forever grateful for you,<br>Your person ❤️</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reasons">
+      <div class="wrap reveal">
+        <h2 class="section-title">A few reasons <span>it's you</span></h2>
+        <p class="intro">If I tried to list every reason, this page would never end.</p>
+        <div class="grid">
+          <div class="card reason"><div class="emoji">💗</div><h3>Your heart</h3><p>The care and love you give make a difference in my life.</p></div>
+          <div class="card reason"><div class="emoji">🌷</div><h3>Your presence</h3><p>Even on hard days, you have a way of making things feel lighter.</p></div>
+          <div class="card reason"><div class="emoji">🎧</div><h3>Your voice</h3><p>Sometimes hearing you is enough to help me breathe easier.</p></div>
+          <div class="card reason"><div class="emoji">✨</div><h3>Your strength</h3><p>I admire the person you are and the person you are becoming.</p></div>
+          <div class="card reason"><div class="emoji">🤍</div><h3>Your support</h3><p>You have stood beside me through moments that were not easy.</p></div>
+          <div class="card reason"><div class="emoji">♾️</div><h3>Simply you</h3><p>I love the little things that make you uniquely yourself.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="memories">
+      <div class="wrap reveal">
+        <h2 class="section-title">Our little <span>memory wall</span></h2>
+        <p class="intro">Add your favourite pictures from your laptop or phone when you edit this website. The pictures you choose will show in these spaces on your device.</p>
+        <div class="memories">
+          <div class="photo"><div class="placeholder">📸</div><strong>My favourite picture of you</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+          <div class="photo"><div class="placeholder">🥰</div><strong>A moment that makes me smile</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+          <div class="photo"><div class="placeholder">💑</div><strong>A picture of us</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+          <div class="photo"><div class="placeholder">🌅</div><strong>A memory I want to keep</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+          <div class="photo"><div class="placeholder">💌</div><strong>A picture that tells our story</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+          <div class="photo"><div class="placeholder">🌍</div><strong>More beautiful moments ahead</strong><input type="file" accept="image/*" onchange="previewPhoto(this)"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="music">
+      <div class="wrap reveal">
+        <h2 class="section-title">Press play, <span>think of us</span> 🎶</h2>
+        <p class="intro">Two romantic songs to put a little love in the air. Tap a link to open the song on YouTube.</p>
+        <div class="music-list">
+          <div class="card song">
+            <div style="font-size:2rem">🎵</div>
+            <h3>“Duduke” — Simi</h3>
+            <p>A sweet Nigerian love song with a soft, affectionate feeling.</p>
+            <a class="btn" href="https://www.youtube.com/results?search_query=Simi+Duduke+official+video" target="_blank" rel="noopener noreferrer">Listen to Duduke ↗️</a>
+          </div>
+          <div class="card song">
+            <div style="font-size:2rem">🎶</div>
+            <h3>“The Best Part” — Johnny Drille</h3>
+            <p>A romantic song for reminding your person how special they are.</p>
+            <a class="btn" href="https://www.youtube.com/results?search_query=Johnny+Drille+The+Best+Part+official+audio" target="_blank" rel="noopener noreferrer">Listen to The Best Part ↗️</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap reveal">
+        <h2 class="section-title">Our story is still <span>unfolding</span></h2>
+        <p class="intro">We have memories behind us, lessons around us, and so many pages still waiting to be written.</p>
+        <div class="grid">
+          <div class="card reason"><div class="emoji">🌱</div><h3>Chapter One</h3><p>How we found each other and began this beautiful journey.</p></div>
+          <div class="card reason"><div class="emoji">🫶</div><h3>Chapter Two</h3><p>Learning each other, growing through challenges, and choosing love.</p></div>
+          <div class="card reason"><div class="emoji">🏡</div><h3>Chapter Three</h3><p>The future we hope to build, one honest step at a time.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="surprise-section">
+      <div class="wrap reveal">
+        <div class="card counter">
+          <div class="eyebrow">A small reminder, just for you</div>
+          <h2 class="section-title">You are loved. <span>Always.</span></h2>
+          <p class="intro">Tap the button whenever you need a reminder of what you mean to me.</p>
+          <button class="btn" onclick="showSurprise()">Open your surprise ❤️</button>
+          <div id="surprise" class="surprise">
+            My love, whatever today brings, please remember that you matter so much. You deserve tenderness, peace, laughter, and a love that shows up in actions. I'm thankful for you, proud of you, and excited for the memories we have yet to make. You have a special place in my heart. 💗
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Made with love, just for you ❤️<br>
+    <span id="footerName">My Love</span>, you make my world a little brighter.
+  </footer>
+
+  <script>
+    // PERSONALIZE HERE: replace My Love with your babe's name.
+    const herName = "My Love";
+    document.getElementById("heroName").textContent = herName;
+    document.getElementById("footerName").textContent = herName;
+    document.title = "For " + herName + " ❤️";
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    function showSurprise() {
+      document.getElementById("surprise").classList.add("show");
+      for (let i = 0; i < 18; i++) setTimeout(createHeart, i * 90);
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = ["❤️", "💗", "💕", "💖", "✨"][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (14 + Math.random() * 22) + "px";
+      heart.style.animationDuration = (5 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9500);
+    }
+    setInterval(() => { if (Math.random() > 0.45) createHeart(); }, 1700);
+
+    function previewPhoto(input) {
+      const box = input.closest(".photo");
+      const file = input.files && input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        let img = box.querySelector("img");
+        if (!img) {
+          img = document.createElement("img");
+          box.insertBefore(img, box.firstChild);
+        }
+        img.src = event.target.result;
+        const placeholder = box.querySelector(".placeholder");
+        if (placeholder) placeholder.style.display = "none";
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>
